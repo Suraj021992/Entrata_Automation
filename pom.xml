@@ -14,17 +14,68 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <selenium_webdriver>4.11.0</selenium_webdriver>
+    <selenium_leg_rc>3.12.0</selenium_leg_rc>
+    <webdriverManager>5.6.1</webdriverManager>
+    <testNG>7.4.0</testNG>
+    <extentReport>3.1.5</extentReport>
+    
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
+      <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>${selenium_webdriver}</version>
     </dependency>
+ 	
+ 
+  	<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-leg-rc</artifactId>
+    <version>${selenium_leg_rc}</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>${testNG}</version>
+    <scope>test</scope>
+    </dependency>
+	
+	
+	<dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>${extentReport}</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>io.github.bonigarcia</groupId>
+    <artifactId>webdrivermanager</artifactId>
+    <version>${webdriverManager}</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>commons-io</groupId>   
+	    <artifactId>commons-io</artifactId>
+	    <version>2.6</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>31.0.1-jre</version>
+	</dependency>
+	
+	<dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.5</version>
+    </dependency>
+	
   </dependencies>
 
   <build>
@@ -47,6 +98,11 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+          <configuration>
+          	     <suiteXmlFiles>
+          	        <suiteXmlFile>testng.xml</suiteXmlFile>
+          	     </suiteXmlFiles>
+          	  </configuration>	
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>

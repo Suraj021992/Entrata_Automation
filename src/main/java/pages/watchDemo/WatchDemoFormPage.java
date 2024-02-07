@@ -48,8 +48,9 @@ public class WatchDemoFormPage {
 				}
 			catch(Exception e)
 				{
-					CommonActions.waitForLoadingElement(driver, parentOfForm);
-					CommonActions.waitForElementVisible(driver, driver.findElement(emailAddress), 20*i);
+//					CommonActions.waitForLoadingElement(driver, parentOfForm);
+//					CommonActions.waitForElementVisible(driver, driver.findElement(emailAddress), 20*i);
+				   continue;
 				}
 		}
 		return CommonActions.verifyTextAreaRedBorder(driver, driver.findElement(emailAddress), "wrongemail id");

@@ -115,8 +115,21 @@ public class CommonActions {
 	
 	public static void verifyEntrataHomePage(WebDriver driver)
 	{
-		CommonActions.waitForLoadingElement(driver, By.xpath("//a[@title='Entrata Home Page']"));
-		clickOnElement(driver, driver.findElement(By.xpath("//a[@title='Entrata Home Page']")));
+		for(int i = 0; i < 5; i++) {
+			try {
+				CommonActions.waitForLoadingElement(driver, By.xpath("//a[@title='Entrata Home Page']"));
+				if(driver.findElement(By.xpath("//a[@title='Entrata Home Page']")).isDisplayed())
+				{
+					clickOnElement(driver, driver.findElement(By.xpath("//a[@title='Entrata Home Page']")));
+					break;
+				}
+				
+			}
+			catch (Exception e) {
+			   continue;
+			}
+		}
+		
 	}
 	
 	public static void acceptCookies(WebDriver driver)

@@ -31,7 +31,6 @@ public class ProductsPage {
 		driver.findElements(products_links).forEach(ele-> links.add(ele.getAttribute("href")));
 		CommonActions.mouseHour(driver.findElement(entrataHomeIcon), driver);
 		CommonActions.clickOnElement(driver, driver.findElement(entrataHomeIcon));
-		CommonActions.sleep(2000);
 		return links;
 	}
 	

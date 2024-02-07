@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 
 import baseClass.BaseClass;
 import pages.products.ProductsPage;
-import uniqueFunctionForEntrata.CommonActions;
 import url_Login_Process.BrowserInstance;
 
 public class VerifySubMenuTest extends BaseClass{
@@ -25,6 +24,5 @@ public class VerifySubMenuTest extends BaseClass{
 	{
 		product.MoveOnProducts(driver);
 		product.scrollToFooter(driver);
-		CommonActions.sleep(2000);
 	}
 }

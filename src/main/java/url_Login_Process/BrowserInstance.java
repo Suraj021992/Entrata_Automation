@@ -14,6 +14,7 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import uniqueFunctionForEntrata.CommonActions;
 
 
 public class BrowserInstance {
@@ -21,6 +22,8 @@ public class BrowserInstance {
     public static WebDriver driver = null;
 	
 	static String url = "";
+	
+	final static String browserPath = CommonActions.getPropertyValue("configuration.properties", "browserPath");
 	
 	public  static WebDriver getDriverInstance()
 	{
@@ -38,7 +41,7 @@ public class BrowserInstance {
 		LoggingPreferences logpref = new LoggingPreferences();
 		logpref.enable(LogType.PERFORMANCE, Level.ALL);
 		
-		options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+		options.setBinary(browserPath);
 		
 		Map<String, Object> prefs = new HashMap<String, Object>();
 		prefs.put("credentials_enable_service", false);
@@ -63,8 +66,6 @@ public class BrowserInstance {
 	{
 		return driver;
 	}
-	
-	public static void browserClose() { driver.close(); driver = null; }
 	 
 	
 	public static void browserQuit() {  driver.quit(); driver = null;  }

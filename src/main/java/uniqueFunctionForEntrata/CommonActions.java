@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,6 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
@@ -27,9 +29,11 @@ public class CommonActions {
 	
 	static Actions act = null;
 	
+	static By cookies = By.cssSelector("button#rcc-confirm-button");
+	
 	public static String getPropertyValue(String filePath, String property) 
 	   {	
-		 File file= null;
+		 File file = null;
 		 
 		 FileInputStream input = null;
 		 
@@ -51,51 +55,43 @@ public class CommonActions {
 		 catch(Exception e)
 		  {
 			 e.printStackTrace();
-		  }
-		 
+		  }	 
 		 return value;
 	   }
 	
-	public static void sleep(int slp) {
-		try {
-			Thread.sleep(slp);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public static WebElement SearchWebElement(WebDriver driver, WebElement ele) {
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(50))
-				.pollingEvery(Duration.ofSeconds(5)).ignoring(ElementClickInterceptedException.class);
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(60))
+				.pollingEvery(Duration.ofSeconds(5)).ignoring(ElementClickInterceptedException.class).ignoring(NoSuchElementException.class);
 
 		WebElement Alert = wait.until(ExpectedConditions.visibilityOf(ele));
 
 		return Alert;
 	}
 	
-	
-
 	public static WebElement waitForLoadingElement(WebDriver driver, By parent)
 	{
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i < 10; i++)
 		{
 			try {
 				WebElement DocumentParent = SearchWebElement(driver, driver.findElement(parent));
 				if(DocumentParent.isDisplayed())
 				{
-					sleep(800);
+					waitForElementVisible(driver, driver.findElement(parent), 25);
 					return SearchWebElement(driver, driver.findElement(parent));
 				}
 			}
 			catch (Exception e)
 			{
-				sleep(3000);
 				continue;
 			}
 		}
 		return null;
 	}
 	
+	public static void waitForElementVisible(WebDriver driver,WebElement ele, int waitTime)
+	{
+		new WebDriverWait(driver, Duration.ofSeconds(waitTime)).until(ExpectedConditions.visibilityOf(ele));
+	}
 	
 	
 	public static WebElement mouseHour(WebElement ele, WebDriver driver)
@@ -125,10 +121,10 @@ public class CommonActions {
 	
 	public static void acceptCookies(WebDriver driver)
 	{
-		WebElement cookie = CommonActions.waitForLoadingElement(driver, By.cssSelector("button#rcc-confirm-button"));
+		WebElement cookie = CommonActions.waitForLoadingElement(driver, cookies);
 		if(cookie != null) {		
 	      if(cookie.isDisplayed())
-	    	clickOnElement(driver, driver.findElement(By.cssSelector("button#rcc-confirm-button")));
+	    	clickOnElement(driver, driver.findElement(cookies));
 		} 
 	}
 	
@@ -166,6 +162,5 @@ public class CommonActions {
 	 {
 		 JavascriptExecutor js = (JavascriptExecutor) driver;
 		 js.executeScript("arguments[0].scrollIntoView(true);",ele);	
-		 sleep(500);
 	 }
 }

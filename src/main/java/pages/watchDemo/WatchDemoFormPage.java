@@ -2,7 +2,6 @@ package pages.watchDemo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import uniqueFunctionForEntrata.CommonActions;
 
@@ -28,6 +27,8 @@ public class WatchDemoFormPage {
 	
 	By entrataLogoOnWatchDemoPage = By.id("mkto_gen_Header_Logo");
 	
+	By parentOfForm = By.xpath("//div[@class='dis_flex jcsb']");
+	
 
 	public void clickOnWatchDemoButton(WebDriver driver)
 	{
@@ -37,7 +38,20 @@ public class WatchDemoFormPage {
 	
 	public boolean verifyEmailInputBox(WebDriver driver)
 	{
-		CommonActions.waitForLoadingElement(driver, entrataLogoOnWatchDemoPage);
+		for(int i = 1; i < 6 ; i++)
+		{
+			try {
+				  CommonActions.waitForLoadingElement(driver, parentOfForm);
+				  CommonActions.waitForElementVisible(driver, driver.findElement(emailAddress), 10*i);
+				  if(driver.findElement(emailAddress).isDisplayed())
+					   break;
+				}
+			catch(Exception e)
+				{
+					CommonActions.waitForLoadingElement(driver, parentOfForm);
+					CommonActions.waitForElementVisible(driver, driver.findElement(emailAddress), 20*i);
+				}
+		}
 		return CommonActions.verifyTextAreaRedBorder(driver, driver.findElement(emailAddress), "wrongemail id");
 	}
 	
